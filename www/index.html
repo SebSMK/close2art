@@ -3,11 +3,30 @@
   <head>
     <title>Capture Photo</title>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"/>
+    
+     <style>
+      html, body {width:100%;height:100%;margin:0;padding:0; font-family: Verdana, Geneva, sans-serif;}
+      a img {border:none;}
+      #title, #logo, #examples{position: absolute; background-color: rgba(255, 255, 255, 0.8); z-index: 10;}
+      #title{top: 10px; left: 10px; padding: 10px 10px 7px 10px;}
+      #title h1{display: none;}
+      #logo{left: 10px; bottom: 10px; padding: 10px 10px 5px 10px;}
+      #examples{bottom: 10px; right: 10px; padding: 5px 10px;}
+      #examples a{font-size: 16px; color: black; text-decoration: none;}
+      #examples a:hover{color: darkslategray;}
+      h1{margin: 5px 10px;}
+      #fork{position: absolute; top: 0; right: 0; border: 0; z-index: 10;}
+      section.display{height: 600px;}
+    </style>
+    
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://cdn.klokantech.com/iiifviewer/v1.1/iiifviewer.js"></script>
     <script type="text/javascript" charset="utf-8">
+    
+   
         
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
@@ -19,6 +38,10 @@
     // Wait for PhoneGap to connect with the device
     //
     document.addEventListener("deviceready",onDeviceReady,false);
+    
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      document.getElementById("title").addEventListener("click", displayCommand);  
+    });
     
 
     // PhoneGap is ready to be used!
@@ -34,25 +57,57 @@
     function onPhotoDataSuccess(imageData) {
       // Get image handle
       //
-      var smallImage = document.getElementById('smallImage');
+      //var smallImage = document.getElementById('smallImage');
 
       // Unhide image elements
       //
-      smallImage.style.display = 'block';
+      //smallImage.style.display = 'block';
 
       // Show the captured photo
       // The inline CSS rules are used to resize the image
       //
-      smallImage.src = "data:image/png;base64," + imageData;
+      //smallImage.src = "data:image/png;base64," + imageData;
       
-      var phototext = document.getElementById('phototext');
+      //var phototext = document.getElementById('phototext');
       
-      phototext.style.display = 'block';
-      phototext.innerHTML = "data:image/png;base64," + imageData;
+      //phototext.style.display = 'block';
+      //phototext.innerHTML = "data:image/png;base64," + imageData;
       
-      sendToSMK("data:image/png;base64," + imageData);
+      ocrAPI("data:image/png;base64," + imageData);
     }    	
     
+    // Image display
+    function displayImage(id) {
+      id =  id === undefined ? 'KMS1' : id    
+      var url = 'http://demoapi.smk.dk:8088/api/images/iiif/' + id;
+      
+      var commandsection = document.getElementById('command');
+      commandsection.style.display = 'none';
+      var displaysection = document.getElementById('display');
+      displaysection.style.display = 'block';
+      
+      try{
+        new IiifViewer('map', url);
+      }
+      catch(e){
+        onFail(e.message);  
+      }
+          
+    }
+    
+    // command display
+    function displayCommand(id) {
+      
+      var commandsection = document.getElementById('command');
+      commandsection.style.display = 'block';
+      var displaysection = document.getElementById('display');
+      displaysection.style.display = 'none';
+      
+      var map = document.getElementById('map');
+      while (map.firstChild) {
+        map.removeChild(map.firstChild);
+      }           
+    }
 
     // A button will call this function
     //
@@ -82,18 +137,18 @@
     // Called if something bad happens.
     // 
     function onFail(message) {
-      alert('Failed because: ' + message);
+      var output = document.getElementById('output');
+      output.style.display = 'block';
+      output.innerHTML = JSON.stringify(err);
+      console.error(err);
     }          
     
-    function sendToSMK(b64encoded) {           
+    function ocrAPI(b64encoded) {           
       if (b64encoded === undefined)
-        b64encoded = jpgB64;               
-      
-      var phototext = document.getElementById('phototext');
-      phototext.style.display = 'block';
+        b64encoded = jpgB64;                           
       
       $.ajax({          
-           url: 'http://172.20.1.203:10011/api/proto/ocr/',
+           url: 'http://demoapi.smk.dk:8088/api/proto/ocr/',
            beforeSend: function(xhrObj){
             // Request headers
             xhrObj.setRequestHeader("Content-Type","application/octet-stream");            
@@ -108,41 +163,36 @@
           data: b64encoded
           //data: {"url": b64encoded}
        })
-      .done(function(data) {                      
-        phototext.innerHTML = JSON.stringify(data);
-        console.log(JSON.stringify(data));        
+      .done(function(solrresponse) {                            
+        console.log(JSON.stringify(solrresponse));
+        if(solrresponse.response.numFound > 0 && solrresponse.response.docs[0].id !== undefined ){
+          displayImage(solrresponse.response.docs[0].id);
+        }else{          
+          onFail('ocr gave no results');
+        }                
       })
       .fail(function(err) {
-        phototext.innerHTML = JSON.stringify(err);
-        console.error(err.responseText);
+        onFail(err);  
       });
     }    
     
     </script>
     
-    <script>
-      $( document ).ready(function() {
-        //document.getElementById("viewForm").submit();
-      });            
-      
-    </script>
-    
   </head>
-  <body>    
-    <div id="viewzone" class="viewzone">
-      <form id="viewForm" target="my-iframe" method="post" action="http://demoapi.smk.dk/zoom/compare/">
-      <input id="images" name="images" value='[{"id":"8f3f44b0-891a-d405-1f20-33cc077301bc"}]' type="hidden">
-      </form>
-      <iframe name="my-iframe">
-      <span></span>
-    </div>
+  <body>        
     
-    <button onclick="sendToSMK();">SMK OCR</button> <br>         
-    <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>    
-    <img style="display:none;width:100px;" id="smallImage" src="" />    
-    <img style="display:none;" id="largeImage" src="" />
-    <div id="phototext"></div>    
+    <section id="command">
+      <button onclick="displayImage();">Start viewer</button> <br> 
+      <button onclick="ocrAPI();">SMK OCR</button> <br>         
+      <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
+      <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+      <div id="output"></div>          
+    </section>
+    
+    <section id="display" style="display:none">
+      <div id="title"><img src="img/smk.png"><h1><strong>Close</strong> 2Art</h1></div>
+      <div id="map" style="width:100%;height:100%;padding-top:20%;"></div>        
+    </section>    
   </body>
 </html>
 
