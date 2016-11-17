@@ -69,7 +69,8 @@
       .done(function(response) {                            
         viewer =       
           OpenSeadragon({
-              id:                 "seadragon-viewer",
+              /*
+              id:                 "dz",
               prefixUrl:          "http://demoapi.smk.dk/images/",
               preserveViewport:   true,
               gestureSettings: {"pinchToZoom": true},
@@ -77,7 +78,23 @@
               //minZoomLevel:       1,
               defaultZoomLevel:   1,
               showNavigationControl: false,
-              //sequenceMode:       true,
+              //sequenceMode:       true, 
+              tileSources:   [response]
+              */
+              
+              id:                 "dz",              
+              prefixUrl: "img/",
+             	//constrainDuringPan: true,
+             	zoomInButton:   "zoom-in",
+             	zoomOutButton:  "zoom-out",
+             	fullPageButton: "zoom-expand",
+             	//sequenceMode: true,
+             	//showSequenceControl: false,
+             	maxZoomPixelRatio: 1.2,
+             	visibilityRatio: 1,
+             	defaultZoomLevel: 2,
+              minZoomLevel:       1,
+             	homeFillsViewer: true,
               tileSources:   [response]
           });  
       })
