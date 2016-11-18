@@ -1,5 +1,5 @@
    
-        
+    var viewer;    
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
     var imgURI = "img/skaeg.jpg";
@@ -58,7 +58,7 @@
       var displaysection = document.getElementById('display');
       displaysection.style.display = 'block';
       
-      var viewer;
+      
       
       try{
        
@@ -140,39 +140,7 @@
       .fail(function(err) {
         onFail(err);  
       });
-      
-        //new IiifViewer('map', url);
-        /*
-        viewer =       
-          OpenSeadragon({
-              id:                 "seadragon-viewer",
-              prefixUrl:          "http://demoapi.smk.dk/images/",
-              preserveViewport:   true,
-              gestureSettingsTouch: {"pinchToZoom": true},
-              //visibilityRatio:    1,
-              //minZoomLevel:       1,
-              defaultZoomLevel:   1,
-              showNavigationControl: false,
-              //sequenceMode:       true,
-              tileSources:   [{"@context" : "http://iiif.io/api/image/2/context.json",
-          "@id" : "http://iip.smk.dk/iiif/%2Fstorage%2Fdev%2Fkms1_564af3627fab5_pyr.tif",
-          "protocol" : "http://iiif.io/api/image",
-          "width" : 7328,
-          "height" : 5919,
-          "sizes" : [
-             { "width" : 730, "height" : 591 }             
-          ],
-          "tiles" : [
-             { "width" : 256, "height" : 256, "scaleFactors" : [ 1, 2, 4, 8, 16 ] }
-          ],
-          "profile" : [
-             "http://iiif.io/api/image/2/level1.json",
-             { "formats" : [ "jpg" ],
-               "qualities" : [ "native","color","gray" ],
-               "supports" : ["regionByPct","sizeByForcedWh","sizeByWh","sizeAboveFull","rotationBy90s","mirroring"] }
-          ]}]
-          });  */
-        
+             
       }
       catch(e){
         onFail(e.message);  
@@ -188,10 +156,18 @@
       var displaysection = document.getElementById('display');
       displaysection.style.display = 'none';
       
-      var map = document.getElementById('seadragon-viewer');
+      var map = document.getElementById('dz');
+      var zoome = document.getElementById('zoomCtrls');
+      
+      viewer.destroy(); 
+      viewer = null;
+      /* 
       while (map.firstChild) {
         map.removeChild(map.firstChild);
-      }           
+      } 
+      if(zoome !== undefined)
+        map.appendChild = zoome;
+       */         
     }
 
     // A button will call this function
@@ -221,7 +197,7 @@
 
     // Called if something bad happens.
     // 
-    function onFail(message) {
+    function onFail(err) {
       var output = document.getElementById('output');
       output.style.display = 'block';
       output.innerHTML = JSON.stringify(err);
