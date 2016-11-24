@@ -26,25 +26,7 @@
     
     // Called when a photo is successfully retrieved
     //
-    function onPhotoDataSuccess(imageData) {
-      // Get image handle
-      //
-      //var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      //smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      //smallImage.src = "data:image/png;base64," + imageData;
-      
-      //var phototext = document.getElementById('phototext');
-      
-      //phototext.style.display = 'block';
-      //phototext.innerHTML = "data:image/png;base64," + imageData;
-      
+    function onPhotoDataSuccess(imageData) {      
       ocrAPI("data:image/png;base64," + imageData);
     }    	
     
@@ -111,7 +93,8 @@
             startRotatedHeight:      0.1, // only used if startRotated=true; value is relative to image height
             restrictToImage:         false, // true = do not allow any part of the selection to be outside the image
             onSelection:             function(rect) {
-                                          alert(rect + ' Center point: ' + rect.getCenter() + ' Degree rotation: ' + rect.getDegreeRotation());
+                                          //alert(rect + ' Center point: ' + rect.getCenter() + ' Degree rotation: ' + rect.getDegreeRotation());
+                                          insertImage(rect, viewer.tileSources[0]["@id"]);
                                       },
             prefixUrl:               null, // overwrites OpenSeadragon's option
             navImages:               { // overwrites OpenSeadragon's options
@@ -146,6 +129,43 @@
         onFail(e.message);  
       }
           
+    }
+    
+    // insert image
+    function insertImage(rect, iiifid){
+      
+      var aEl  = document.createElement("div"); 
+      aEl.setAttribute("class", "grid-item");             
+      var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height + '/' + '256,/0/default.jpg';      
+      var img = document.createElement("img");        
+      img.setAttribute("class", "grid-item-content");
+      img.setAttribute("src", src);      
+      //img.innerHTML += '<div class="image"><img src="'+src+'"></a></div>';
+      
+      aEl.appendChild(img);                 
+      //document.getElementById('grid').appendChild(aEl);
+      //var $grid = document.getElementById('grid');
+      //$grid.masonry('prepended', aEl); 
+      
+      var grid = document.getElementById('grid');
+      var elems = [];
+      var fragment = document.createDocumentFragment();
+      fragment.appendChild( aEl );
+      elems.push( aEl );
+      
+      // append elements to container
+      grid.insertBefore( fragment, grid.firstChild );
+      // add and lay out newly appended elements
+      msnry.prepended( elems );
+      
+      //msnry.layout();
+           
+      // add event listener
+      /*
+      document.getElementById('file-' + current_file_id).querySelector('a');                                                  
+      a.addEventListener('click', selectImageEvent, false);
+      */      
+    
     }
     
     // command display

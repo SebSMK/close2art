@@ -21,12 +21,79 @@
     
     <script src="js/openseadragonselection.js"></script> 
         
-    <script src="js/app.js"></script>    
+    <script src="js/app.js"></script>  
+    
+    <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
+    
+    
+    <style>
+      * { box-sizing: border-box; }
+
+      body { font-family: sans-serif; }
+      
+      .grid {
+        //background: #EEE;
+        max-width: 1200px;
+        display: block;
+        position: absolute;
+        top: 40px;
+        z-index: 100;
+      }
+      
+      .grid-item {
+        float: left;
+      }
+      
+      /* item is invisible, but used for layout */
+      .grid-item,
+      .grid-item-content {
+        width: 200px;
+        //height: 120px;
+      }
+      
+      /* grid-item-content is visible, and transitions size */
+      .grid-item-content {
+        width: 200px;
+        //height: 120px;
+        background: #D26;
+        border: 2px solid #333;
+        border-color: hsla(0, 0%, 0%, 0.5);
+        border-radius: 5px;
+        -webkit-transition: width 0.4s, height 0.4s;
+                transition: width 0.4s, height 0.4s;
+      }
+      
+      .grid-item:hover .grid-item-content {
+        border-color: white;
+        background: #A2C;
+        cursor: pointer;
+      }
+      
+      /* both item and item content change size */
+      .grid-item.is-expanded,
+      .grid-item.is-expanded .grid-item-content {
+        width: 360px;
+        height: 240px;
+      }
+      
+      .grid.is-expanded{
+        width: 200px;  
+      }
+      
+      .grid-item.is-expanded {
+        z-index: 2;
+      }
+      
+      .grid-item.is-expanded .grid-item-content {
+        background: #F90;
+      }
+    
+    </style>      
     
   </head>
   <body>        
     
-    <section id="command">
+    <section id="command" style="display:none">
       <button onclick="displayImage();">Start viewer</button> <br> 
       <button onclick="ocrAPI();">SMK OCR</button> <br>         
       <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
@@ -48,10 +115,48 @@
             <div id="zoom-expand" class="zoom-icon fa fa-expand" title="Toggle full page" style="display: inline-block; position: relative;"></div>
             <a rel="leanModal" href="#download" id="download-icon" class="zoom-icon fa fa-download" title="Download"></a>
           </div>
-        </div>
+        </div>              
       </div>
-                 
-    </section>    
+    </section>
+    
+    <div id="grid" class="grid">
+      <div class="grid-item">
+        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/0?size=medium" />
+      </div>
+     <div class="grid-item">
+        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/1?size=medium" />
+      </div>
+      <div class="grid-item">
+        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/2?size=medium" />
+      </div>
+      <div class="grid-item">
+        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/3?size=medium" />
+      </div>
+    </div>
+    
+      
+    <script type="text/javascript">        
+        // external js: masonry.pkgd.js   
+      
+      var grid = document.getElementById('grid');//document.querySelector('.grid');
+      var msnry = new Masonry( grid, {
+        columnWidth: 200,
+        itemSelector: '.grid-item'
+      });            
+      
+      grid.addEventListener( 'click', function( event ) {
+        // don't proceed if item content was not clicked on
+        if ( !matchesSelector( event.target, '.grid-item-content' )  ) {
+          return;
+        }
+        //var itemElem = event.target.parentNode;
+        //itemElem.classList.toggle('is-expanded');
+        grid.classList.toggle('is-expanded');
+      
+        msnry.layout();
+      });
+     
+    </script>   
   </body>
 </html>
 
