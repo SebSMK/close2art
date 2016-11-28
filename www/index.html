@@ -141,19 +141,36 @@
       });
       */ 
       
+      var getItem = function() {  
+        var rando = Math.ceil( Math.random() * 1000 );
+        // random parameter to prevent cached images
+        var src = "http://demoapi.smk.dk:8088/api/images/rand/" + rando + "?size=medium";
+        
+        var aEl  = document.createElement("div"); 
+        aEl.setAttribute("class", "grid-item");                   
+        var img = document.createElement("img");
+        img.setAttribute("class", "grid-item-content");
+        img.setAttribute("src", src);            
+        aEl.appendChild(img);                     
+        
+        var item = aEl.outerHTML;
+        return item;
+      };
+      
+      var getItems = function() {
+        var items = '';
+        for ( var i=0; i < 3; i++ ) {
+          items += getItem();
+        }
+        // return jQuery object
+        return $( items );
+      }
+      
       var addNewImages = function(){
         var $items = getItems();
         $container.masonryImagesReveal( $items );      
       };
-       
-      
-      /*
-      for (i = 0; i < 5; i++) { 
-        insertImage("http://demoapi.smk.dk:8088/api/images/rand/" + i +"?size=medium");
-      }
-      */
-                 
-      
+                  
       grid.addEventListener( 'click', function( event ) {
         // don't proceed if item content was not clicked on
         if ( !matchesSelector( event.target, '.grid-item-content' )  ) {
