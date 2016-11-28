@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="css/jquery.mmenu.all.css">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/audioplayer.css">
-
-
     
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
@@ -24,7 +22,7 @@
     <script src="js/app.js"></script>  
     
     <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
-    
+    <script src="http://imagesloaded.desandro.com/imagesloaded.pkgd.js"></script>            
     
     <style>
       * { box-sizing: border-box; }
@@ -93,7 +91,7 @@
   <body>        
     
     <section id="command" style="display">
-      <button onclick="displayImage();">Start viewer</button> <br> 
+      <button onclick="displayImage();addNewImages();">Start viewer</button> <br> 
       <button onclick="ocrAPI();">SMK OCR</button> <br>         
       <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
       <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
@@ -116,35 +114,38 @@
           </div>
         </div>              
       </div>
-      <div id="grid" class="grid">
-        <div class="grid-item">
-          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/0?size=medium" />
-        </div>
-        <div class="grid-item">
-          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/1?size=medium" />
-        </div>
-        <div class="grid-item">
-          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/2?size=medium" />
-        </div>
-        <div class="grid-item">
-          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/3?size=medium" />
-        </div>
-      </div>
+      <div id="grid" class="grid"></div>
+      
+      <div id="image-container"></div>  
     </section>
     
    
     
+    <script src="js/imgReveal.js"></script>    
+    <script type="text/javascript">                           
+            
+      //var grid = document.getElementById('grid');//document.querySelector('.grid');
       
-    <script type="text/javascript">        
-        // external js: masonry.pkgd.js               
-      
-      var grid = document.getElementById('grid');//document.querySelector('.grid');
+      var $container = $('#grid').masonry({
+        columnWidth: 200,
+        itemSelector: '.grid-item',
+        containerStyle: { position: 'absolute' }, 
+        gutter: 10
+      }); 
+      /*
       var msnry = new Masonry( grid, {
         columnWidth: 200,
         itemSelector: '.grid-item',
         containerStyle: { position: 'absolute' }, 
         gutter: 10        
-      }); 
+      });
+      */ 
+      
+      var addNewImages = function(){
+        var $items = getItems();
+        $container.masonryImagesReveal( $items );      
+      };
+       
       
       /*
       for (i = 0; i < 5; i++) { 
@@ -162,10 +163,13 @@
         //itemElem.classList.toggle('is-expanded');
         grid.classList.toggle('is-expanded');
       
-        msnry.layout();
+        $container.masonry('layout');
       });
      
-    </script>   
+     
+     
+    </script>
+       
   </body>
 </html>
 

@@ -135,9 +135,8 @@
     function insertCroppedImage(rect, iiifid){                        
       var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height + '/' + '256,/0/default.jpg';
       insertImage(src);                      
-    }    
+    }                    
     
-    // insert image
     function insertImage(src){
       
       var aEl  = document.createElement("div"); 
@@ -153,12 +152,9 @@
         fragment.appendChild( aEl );
         elems.push( aEl );
         
-        // append elements to container
-        grid.insertBefore( fragment, grid.firstChild );
-        // add and lay out newly appended elements
-        msnry.prepended( elems );
-        
-        //msnry.layout();
+        var $elems = $( elems );
+        var $grid = $('.grid');
+        $grid.prepend( $elems ).masonry( 'prepended', $elems );
       
       }
       img.setAttribute("class", "grid-item-content");
