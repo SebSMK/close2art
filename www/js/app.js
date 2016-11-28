@@ -94,7 +94,7 @@
             restrictToImage:         false, // true = do not allow any part of the selection to be outside the image
             onSelection:             function(rect) {
                                           //alert(rect + ' Center point: ' + rect.getCenter() + ' Degree rotation: ' + rect.getDegreeRotation());
-                                          insertImage(rect, viewer.tileSources[0]["@id"]);
+                                          insertCroppedImage(rect, viewer.tileSources[0]["@id"]);
                                       },
             prefixUrl:               null, // overwrites OpenSeadragon's option
             navImages:               { // overwrites OpenSeadragon's options
@@ -132,34 +132,38 @@
     }
     
     // insert image
-    function insertImage(rect, iiifid){
+    function insertCroppedImage(rect, iiifid){                        
+      var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height + '/' + '256,/0/default.jpg';
+      insertImage(src);                      
+    }    
+    
+    // insert image
+    function insertImage(src){
       
       var aEl  = document.createElement("div"); 
       aEl.setAttribute("class", "grid-item");             
-      var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height + '/' + '256,/0/default.jpg';      
+            
       var img = document.createElement("img");        
+      img.onload = function(){
+         aEl.appendChild(img);                 
+        
+        var grid = document.getElementById('grid');
+        var elems = [];
+        var fragment = document.createDocumentFragment();
+        fragment.appendChild( aEl );
+        elems.push( aEl );
+        
+        // append elements to container
+        grid.insertBefore( fragment, grid.firstChild );
+        // add and lay out newly appended elements
+        msnry.prepended( elems );
+        
+        //msnry.layout();
+      
+      }
       img.setAttribute("class", "grid-item-content");
-      img.setAttribute("src", src);      
-      //img.innerHTML += '<div class="image"><img src="'+src+'"></a></div>';
-      
-      aEl.appendChild(img);                 
-      //document.getElementById('grid').appendChild(aEl);
-      //var $grid = document.getElementById('grid');
-      //$grid.masonry('prepended', aEl); 
-      
-      var grid = document.getElementById('grid');
-      var elems = [];
-      var fragment = document.createDocumentFragment();
-      fragment.appendChild( aEl );
-      elems.push( aEl );
-      
-      // append elements to container
-      grid.insertBefore( fragment, grid.firstChild );
-      // add and lay out newly appended elements
-      msnry.prepended( elems );
-      
-      //msnry.layout();
-           
+      img.setAttribute("src", src); 
+            
       // add event listener
       /*
       document.getElementById('file-' + current_file_id).querySelector('a');                                                  

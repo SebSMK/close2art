@@ -32,16 +32,17 @@
       body { font-family: sans-serif; }
       
       .grid {
-        //background: #EEE;
-        max-width: 1200px;
+        background-color: rgba(255,255,255,0.3);
+        width: 200px;
         display: block;
         position: absolute;
-        top: 40px;
-        z-index: 100;
+        top: 70px;
+        z-index: 100;           
       }
       
       .grid-item {
         float: left;
+        margin-bottom: 10px;
       }
       
       /* item is invisible, but used for layout */
@@ -53,11 +54,9 @@
       
       /* grid-item-content is visible, and transitions size */
       .grid-item-content {
-        width: 200px;
-        //height: 120px;
-        background: #D26;
-        border: 2px solid #333;
-        border-color: hsla(0, 0%, 0%, 0.5);
+        width: 200px;        
+        border: 4px solid #333;
+        border-color: rgba(255,255,255,0.5);
         border-radius: 5px;
         -webkit-transition: width 0.4s, height 0.4s;
                 transition: width 0.4s, height 0.4s;
@@ -77,7 +76,7 @@
       }
       
       .grid.is-expanded{
-        width: 200px;  
+        width: 1200px;  
       }
       
       .grid-item.is-expanded {
@@ -93,7 +92,7 @@
   </head>
   <body>        
     
-    <section id="command" style="display:none">
+    <section id="command" style="display">
       <button onclick="displayImage();">Start viewer</button> <br> 
       <button onclick="ocrAPI();">SMK OCR</button> <br>         
       <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
@@ -117,32 +116,42 @@
           </div>
         </div>              
       </div>
+      <div id="grid" class="grid">
+        <div class="grid-item">
+          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/0?size=medium" />
+        </div>
+        <div class="grid-item">
+          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/1?size=medium" />
+        </div>
+        <div class="grid-item">
+          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/2?size=medium" />
+        </div>
+        <div class="grid-item">
+          <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/3?size=medium" />
+        </div>
+      </div>
     </section>
     
-    <div id="grid" class="grid">
-      <div class="grid-item">
-        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/0?size=medium" />
-      </div>
-     <div class="grid-item">
-        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/1?size=medium" />
-      </div>
-      <div class="grid-item">
-        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/2?size=medium" />
-      </div>
-      <div class="grid-item">
-        <img class="grid-item-content" src="http://demoapi.smk.dk:8088/api/images/rand/3?size=medium" />
-      </div>
-    </div>
+   
     
       
     <script type="text/javascript">        
-        // external js: masonry.pkgd.js   
+        // external js: masonry.pkgd.js               
       
       var grid = document.getElementById('grid');//document.querySelector('.grid');
       var msnry = new Masonry( grid, {
         columnWidth: 200,
-        itemSelector: '.grid-item'
-      });            
+        itemSelector: '.grid-item',
+        containerStyle: { position: 'absolute' }, 
+        gutter: 10        
+      }); 
+      
+      /*
+      for (i = 0; i < 5; i++) { 
+        insertImage("http://demoapi.smk.dk:8088/api/images/rand/" + i +"?size=medium");
+      }
+      */
+                 
       
       grid.addEventListener( 'click', function( event ) {
         // don't proceed if item content was not clicked on
