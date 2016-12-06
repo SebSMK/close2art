@@ -105,8 +105,7 @@
       <div class="wrapper object mm-page mm-slideout">
         <div id="ocr" class="fa fa-camera"><a title="Recognize artwork" onclick="displayImage();">Recognize artwork</a></div>
         <div id="view-toggle" class="fa fa-bars"><a title="Toggle view" href="#menu">Toggle view</a></div>      
-
-        <div id="mini" class="fa fa-bars"><a title="Show menu" href="#menu">Show menu</a></div>      
+              
         <div class="transLogo light" style="display: block;">
            <div id="title" class="headerLink"><img class="logo" src="/img/SMK-logo-w.png" alt="SMK"></div>
         </div>      
@@ -115,6 +114,8 @@
             <div id="crop-toggle" class="zoom-icon fa fa-scissors" title="Crop toggle"></div>
             <div id="zoom-in" class="zoom-icon fa fa-plus" title="Zoom in"></div>            
             <div id="zoom-out" class="zoom-icon fa fa-minus" title="Zoom out"></div>
+            <div id="confirm-crop" class="zoom-icon fa fa-check-circle" title="Confirm crop"></div>
+            <div id="cancel-crop" class="zoom-icon fa fa-times-circle" title="Cancel crop"></div>         
           </div>
         </div>              
       </div>
@@ -174,7 +175,8 @@
         var $items = getItems();
         $container.masonryImagesReveal( $items );      
       };
-                  
+      
+      var grid = document.getElementById('grid');            
       grid.addEventListener( 'click', function( event ) {
         // don't proceed if item content was not clicked on
         if ( !matchesSelector( event.target, '.grid-item-content' )  ) {
@@ -186,8 +188,6 @@
       
         $container.masonry('layout');
       });
-     
-     
      
     </script>
        

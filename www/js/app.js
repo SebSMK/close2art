@@ -83,9 +83,11 @@
           var selection = viewer.selection({
             element:                 null, // html element to use for overlay
             showSelectionControl:    true, // show button to toggle selection mode
-            toggleButton:            "crop-toggle", // dom element to use as toggle button
+            toggleButton:            "crop-toggle", // dom element to use as toggle button,
+            confirmButton:           "confirm-crop",
+            cancelButton:            "cancel-crop", 
             showConfirmDenyButtons:  true,
-            styleConfirmDenyButtons: true,
+            styleConfirmDenyButtons: false,
             returnPixelCoordinates:  true,
             keyboardShortcut:        'c', // key to toggle selection mode
             rect:                    null, // initial selection as an OpenSeadragon.SelectionRect object
@@ -118,6 +120,10 @@
                 },
             }
         });
+        
+        selection.toggleButton.tracker.clickHandler = function( event ) {        
+          event.eventSource.element.classList.toggle("selected");                    
+        };
           
       })
       .fail(function(err) {
