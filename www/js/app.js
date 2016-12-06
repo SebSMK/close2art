@@ -180,14 +180,13 @@
       var commandsection = document.getElementById('command');
       commandsection.style.display = 'block';
       var displaysection = document.getElementById('display');
-      displaysection.style.display = 'none';
-      
-      var map = document.getElementById('dz');
-      var zoome = document.getElementById('zoomCtrls');
-      
+      displaysection.style.display = 'none';            
+            
       viewer.destroy(); 
       viewer = null;
-      /* 
+      /*
+      var map = document.getElementById('dz');
+      var zoome = document.getElementById('zoomCtrls'); 
       while (map.firstChild) {
         map.removeChild(map.firstChild);
       } 
@@ -200,6 +199,11 @@
     //
     function capturePhotoWithData() {
       // Take picture using device camera and retrieve image as base64-encoded string
+      if (viewer != null){
+        viewer.destroy(); 
+        viewer = null;
+      }
+      
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, 
           { 
             allowEdit: false,

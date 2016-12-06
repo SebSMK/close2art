@@ -1,3 +1,11 @@
+#dz.is-expanded{
+  opacity: 0.3; 
+} 
+
+.is-expanded #ocr, .is-expanded #crop-toggle, .is-expanded #zoom-in, .is-expanded #zoom-out{
+  display: none !important;
+}  
+
 #crop-toggle.selected{
 color: orange
 }

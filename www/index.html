@@ -76,8 +76,9 @@
       }
       
       .grid.is-expanded{
-        width: 1200px;  
-      }
+        width: 1200px; 
+        background-color: rgba(255,255,255,0.0); 
+      }            
       
       .grid-item.is-expanded {
         z-index: 2;
@@ -176,17 +177,25 @@
         $container.masonryImagesReveal( $items );      
       };
       
-      var grid = document.getElementById('grid');            
-      grid.addEventListener( 'click', function( event ) {
-        // don't proceed if item content was not clicked on
-        if ( !matchesSelector( event.target, '.grid-item-content' )  ) {
-          return;
-        }
-        //var itemElem = event.target.parentNode;
-        //itemElem.classList.toggle('is-expanded');
+      var view_toggle = document.getElementById('view-toggle');                         
+      view_toggle.addEventListener( 'click', function( event ) {        
+        var grid = document.getElementById('grid');
         grid.classList.toggle('is-expanded');
+        
+        var opsd = document.getElementById('dz');
+        opsd.classList.toggle('is-expanded');          
       
         $container.masonry('layout');
+      });
+      
+      var ocr = document.getElementById('ocr');                         
+      ocr.addEventListener( 'click', function( event ) { 
+         if (viewer != null){
+            viewer.destroy(); 
+            viewer = null;
+          }
+        //capturePhotoWithData();
+        getPhoto(pictureSource.PHOTOLIBRARY);               
       });
      
     </script>
