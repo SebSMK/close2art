@@ -67,8 +67,8 @@
               id:                 "dz",              
               prefixUrl: "img/",
              	//constrainDuringPan: true,
-             	//zoomInButton:   "zoom-in",
-             	//zoomOutButton:  "zoom-out",
+             	zoomInButton:   "zoom-in",
+             	zoomOutButton:  "zoom-out",
              	//fullPageButton: "zoom-expand",
              	//sequenceMode: true,
              	//showSequenceControl: false,
@@ -83,7 +83,7 @@
           var selection = viewer.selection({
             element:                 null, // html element to use for overlay
             showSelectionControl:    true, // show button to toggle selection mode
-            toggleButton:            null, // dom element to use as toggle button
+            toggleButton:            "crop-toggle", // dom element to use as toggle button
             showConfirmDenyButtons:  true,
             styleConfirmDenyButtons: true,
             returnPixelCoordinates:  true,

@@ -4,14 +4,16 @@
     <title>Capture Photo</title>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"/>        
     
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/jquery.mmenu.all.css">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/audioplayer.css">
+    <link rel="stylesheet" href="css/smk.css">
     
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>    
     <script src="js/openseadragon.js"></script>
@@ -101,16 +103,18 @@
     <section id="display" style="display:none">            
       
       <div class="wrapper object mm-page mm-slideout">
+        <div id="ocr" class="fa fa-camera"><a title="Recognize artwork" onclick="displayImage();">Recognize artwork</a></div>
+        <div id="view-toggle" class="fa fa-bars"><a title="Toggle view" href="#menu">Toggle view</a></div>      
+
         <div id="mini" class="fa fa-bars"><a title="Show menu" href="#menu">Show menu</a></div>      
         <div class="transLogo light" style="display: block;">
            <div id="title" class="headerLink"><img class="logo" src="/img/SMK-logo-w.png" alt="SMK"></div>
         </div>      
         <div id="dz" class="fullImg" style="height: 1024px; max-height: 1024px;">
           <div id="zoomCtrls">
-            <div id="zoom-in" class="zoom-icon fa fa-plus" title="Zoom in" style="display: none; position: relative;"></div>
-            <div id="zoom-out" class="zoom-icon fa fa-minus" title="Zoom out" style="display: none; position: relative;"></div>
-            <div id="zoom-expand" class="zoom-icon fa fa-expand" title="Toggle full page" style="display: inline-block; position: relative;"></div>
-            <a rel="leanModal" href="#download" id="download-icon" class="zoom-icon fa fa-download" title="Download"></a>
+            <div id="crop-toggle" class="zoom-icon fa fa-scissors" title="Crop toggle"></div>
+            <div id="zoom-in" class="zoom-icon fa fa-plus" title="Zoom in"></div>            
+            <div id="zoom-out" class="zoom-icon fa fa-minus" title="Zoom out"></div>
           </div>
         </div>              
       </div>

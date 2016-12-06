@@ -1,0 +1,77 @@
+#crop-toggle{
+  visibility:visible;
+  display:block;
+}
+
+#view-toggle, #ocr, #crop-toggle, #zoom-in, #zoom-out {
+	position:fixed;
+	display:block;
+	top:0px;
+	
+	height:25px;
+	width:25px;
+	padding:8px 10px 12px 10px;	
+	background-color: transparent;
+  color:rgba(255,255,255,.8);
+	z-index:100;
+	text-align:center;
+	font-weight:normal;
+	font-size:2.2em;
+	text-decoration:none;
+	outline:none;
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+#view-toggle {
+	z-index:201;
+  right:60px;
+}
+
+#ocr {
+	z-index:202;
+  right:100px;
+}
+
+#crop-toggle {
+	z-index:203;
+  right:0px;
+}
+
+#zoom-in {
+	z-index:204;
+  right:120px;
+}
+
+#zoom-out {
+	z-index:205;
+  right:100px;
+}
+
+#ocr:hover, #view-toggle:hover, #search:hover, #modalClose:hover, .dzNav:hover {
+	background-color:rgba(0,0,0,.9);
+	color:rgba(255,255,255,.95);
+}
+
+#ocr a, #view-toggle a, #mini a, #search a, #modalClose a {
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:block;
+	width:100%;
+	height:100%;
+	text-indent:-9999px;	
+	outline:none;
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+#ocr:hover, #view-toggle:hover {
+  opacity:1;
+}
