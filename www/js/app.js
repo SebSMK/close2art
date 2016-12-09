@@ -12,7 +12,7 @@
     document.addEventListener("deviceready",onDeviceReady,false);
     
     document.addEventListener("DOMContentLoaded", function(event) { 
-      document.getElementById("title").addEventListener("click", displayCommand);  
+      document.getElementById("title").addEventListener("click", displayCommand);        
     });
     
 
@@ -21,8 +21,35 @@
     function onDeviceReady() {
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
-        console.log(navigator.camera);  
+        console.log(navigator.camera);                       
     } 
+    
+    function onInstragram(){
+     var commandsection = document.getElementById('command');
+      commandsection.style.display = 'none';
+      var displaysection = document.getElementById('display');
+      displaysection.style.display = 'block';   
+     
+     try{
+       Instagram.isInstalled(function (err, installed) {
+        var error = document.getElementById('error');
+        
+        if (installed) {
+            console.log("Instagram is", installed); // installed app version on Android
+            error.innerHTML = "installed";    
+             
+        } else {
+            console.log("Instagram is not installed");
+            error.innerHTML = "non installed";
+        }
+      });
+     }
+     catch(e){
+       var error = document.getElementById('error');
+       error.innerHTML = e.message;
+     }
+              
+    }
     
     // Called when a photo is successfully retrieved
     //
@@ -30,6 +57,7 @@
       ocrAPI("data:image/png;base64," + imageData);
     }    	
     
+        
     // Image display
     function displayImage(id) {
       id =  id === undefined ? 'KMS1' : id    

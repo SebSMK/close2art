@@ -13,6 +13,20 @@ $.fn.masonryImagesReveal = function( $items ) {
     $item.show();
     // masonry does its thing
     msnry.appended( $item );
+    
+    $item[0].addEventListener( 'click', function( event ) {        
+      Instagram.share(event.target, "close2art", function (err) {
+          var error = document.getElementById('error');
+          if (err) {
+              //alert("not shared: " + err);              
+              error.innerHTML = err;
+          } else {
+              //alert("shared");
+              error.innerHTML = "shared";
+          }
+      });    
+    });
+        
   });
   
   return this;
