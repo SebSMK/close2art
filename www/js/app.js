@@ -139,18 +139,24 @@
     
     // insert image
     function insertCroppedImage(rect, iiifid){                        
-      var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height + '/' + '256,/0/default.jpg';
+      var src = iiifid + '/' + rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height;// + '/' + '256,/0/default.jpg';
       insertImage(src);                      
     }                    
     
-    function insertImage(src){
+    function insertImage(root){
       
-      var aEl  = document.createElement("div"); 
-      aEl.setAttribute("class", "grid-item");             
+      var src = root + '/256,/0/default.jpg';
+      var href = root + '/800,/0/default.jpg';
+      
+      
+      var aEl  = document.createElement("a"); 
+      aEl.setAttribute("class", "fancybox grid-item");
+      aEl.setAttribute("href", href);                    
             
       var img = document.createElement("img");        
+      
       img.onload = function(){
-         aEl.appendChild(img);                 
+        aEl.appendChild(img);                 
         
         var grid = document.getElementById('grid');
         var elems = [];
@@ -164,14 +170,7 @@
       
       }
       img.setAttribute("class", "grid-item-content");
-      img.setAttribute("src", src); 
-            
-      // add event listener
-      /*
-      document.getElementById('file-' + current_file_id).querySelector('a');                                                  
-      a.addEventListener('click', selectImageEvent, false);
-      */      
-    
+      img.setAttribute("src", src);                      
     }
     
     // command display
@@ -265,6 +264,23 @@
       .fail(function(err) {
         onFail(err);  
       });
-    }    
+    } 
+    
+    function fancied() { 
+      $(".fancybox").fancybox({type: 'image'}); 
+    } 
+    
+    function buildItem(src, href){
+      var aEl  = document.createElement("a"); 
+      aEl.setAttribute("class", "fancybox grid-item");
+      aEl.setAttribute("href", href);                    
+      var img = document.createElement("img");
+      img.setAttribute("class", "grid-item-content");
+      img.setAttribute("src", src);            
+      aEl.appendChild(img);                     
+      
+      var item = aEl.outerHTML;
+      return item;    
+    }  
     
     

@@ -24,7 +24,19 @@
     <script src="js/app.js"></script>  
     
     <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
-    <script src="http://imagesloaded.desandro.com/imagesloaded.pkgd.js"></script>            
+    <script src="http://imagesloaded.desandro.com/imagesloaded.pkgd.js"></script> 
+    
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    
+    <!-- Optionally add helpers - button, thumbnail and/or media -->
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="js/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+    
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>           
     
     <style>
       * { box-sizing: border-box; }
@@ -100,7 +112,7 @@
       <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
       <div id="output"></div>          
     </section>
-    
+    <button onclick="fancied()">Fancy</button> <br>  
     <section id="display" style="display:none">            
       
       <div class="wrapper object mm-page mm-slideout">
@@ -151,9 +163,13 @@
         var rando = Math.ceil( Math.random() * 1000 );
         // random parameter to prevent cached images
         var src = "http://demoapi.smk.dk:8088/api/images/rand/" + rando + "?size=medium";
-        
-        var aEl  = document.createElement("div"); 
-        aEl.setAttribute("class", "grid-item");                   
+        var href = "http://demoapi.smk.dk:8088/api/images/rand/" + rando + "?size=large";
+        //href="http://fancyapps.com/fancybox/demo/1_b.jpg";
+        //src="http://fancyapps.com/fancybox/demo/1_s.jpg";
+        /* 
+        var aEl  = document.createElement("a"); 
+        aEl.setAttribute("class", "fancybox grid-item");
+        aEl.setAttribute("href", href);                    
         var img = document.createElement("img");
         img.setAttribute("class", "grid-item-content");
         img.setAttribute("src", src);            
@@ -161,6 +177,8 @@
         
         var item = aEl.outerHTML;
         return item;
+        */
+        return buildItem(src, href);
       };
       
       var getItems = function() {
@@ -170,11 +188,14 @@
         }
         // return jQuery object
         return $( items );
-      }
+      }            
       
       var addNewImages = function(){
         var $items = getItems();
-        $container.masonryImagesReveal( $items );      
+        $container.masonryImagesReveal( $items ); 
+        //fancied();
+        
+        //$(".fancybox").fancybox();     
       };
       
       var view_toggle = document.getElementById('view-toggle');                         

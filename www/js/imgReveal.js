@@ -13,6 +13,10 @@ $.fn.masonryImagesReveal = function( $items ) {
     $item.show();
     // masonry does its thing
     msnry.appended( $item );
+    
+    //$(".fancybox").fancybox();
+    fancied();
+    
   });
   
   return this;
