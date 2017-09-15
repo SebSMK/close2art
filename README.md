@@ -47,7 +47,9 @@ FcgidInitialEnv MEMCACHED_SERVERS "localhost"
 FcgidIdleTimeout 0
 FcgidMaxProcessesPerClass 1
 ```
-  * restart apache2 and check [yourIP]/iipsrv/iipsrv.fcgi
+
+* copy iipsrv.fcgid in /usr/lib/iipimage-server/ from [here] (https://drive.google.com/open?id=0B883aH-sLlrQc1RXZHJxd2ZiM2s)
+* restart apache2 and check (yourIP)/iipsrv/iipsrv.fcgi - should read "IIPImage Server - Version 1.0"
 
 
 # Run the app
