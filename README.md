@@ -2,8 +2,8 @@ PhoneGap app using SMK API
 
 # Installing IIPImager Server on Ubuntu 16.04 / Apache 2.4
 
-1.See install documentation http://iipimage.sourceforge.net/documentation/server/
-2.Server config:
+### 1. See install documentation http://iipimage.sourceforge.net/documentation/server/
+### 2. Server config:
   * Check fcgid.conf and fcgid.load in /etc/apache2/mods-enabled 
   * Copy the following conf in /etc/apache2/sites-available and enable it
 
