@@ -67,6 +67,8 @@ RewriteRule ^iiif/(.+) /iipsrv/iipsrv.fcgi?IIIF=$1
       Require all granted
   </Directory>
 ```
+* restart apache and check (yourIP)/iiif/test - it should read "test is neither a file nor part of an image sequence2
+
 
 # Run the app
 
