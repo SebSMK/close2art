@@ -59,6 +59,13 @@ FcgidMaxProcessesPerClass 1
 RewriteEngine on
 RewriteRule ^iiif/(.+) /iipsrv/iipsrv.fcgi?IIIF=$1
 ```
+
+### 4. Mount the foto drive on /mnt/hires
+
+`
+/dev/xvdb /mnt/hires ext4 defaults,nofail 0 2
+`
+
 * add the following lines in /etc/apache2/sites-available/000-default.conf:
 ```
  <Directory /var/www/html>
