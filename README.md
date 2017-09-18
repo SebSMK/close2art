@@ -51,6 +51,22 @@ FcgidMaxProcessesPerClass 1
 * copy iipsrv.fcgid in /usr/lib/iipimage-server/ from [here](https://drive.google.com/open?id=0B883aH-sLlrQc1RXZHJxd2ZiM2s)
 * restart apache2 and check (yourIP)/iipsrv/iipsrv.fcgi - should read "IIPImage Server - Version 1.0"
 
+### 3. Server config - rewrite
+(using .htaccess - consider using directory block instead for?)
+
+* create the following .htaccess file in /var/www/html:
+```
+RewriteEngine on
+RewriteRule ^iiif/(.+) /iipsrv/iipsrv.fcgi?IIIF=$1
+```
+* add the following lines in /etc/apache2/sites-available/000-default.conf:
+```
+ <Directory /var/www/html>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Require all granted
+  </Directory>
+```
 
 # Run the app
 
