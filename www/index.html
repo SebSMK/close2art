@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="css/audioplayer.css">
     <link rel="stylesheet" href="css/smk.css">
     
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>    
     <script src="js/openseadragon.js"></script>
+    
+    <script src="js/sprintf.js"></script>
     
     
     <script src="js/openseadragonselection.js"></script> 
@@ -105,26 +105,26 @@
   </head>
   <body>        
     
-    <section id="command" style="display">
+    <section id="command" style="display:none">
       <button onclick="displayImage();addNewImages();">Start viewer</button> <br> 
-      <button onclick="ocrAPI();">SMK OCR</button> <br>         
+      <button onclick="ocrAPI();">OCR</button> <br>         
       <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>    
       <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
       <div id="output"></div>          
     </section>
-    <button onclick="fancied()">Fancy</button> <br>  
-    <section id="display" style="display:none">            
+     
+    <section id="display" style="display">            
       
       <div class="wrapper object mm-page mm-slideout">
-        <div id="ocr" class="fa fa-camera"><a title="Recognize artwork" onclick="displayImage();">Recognize artwork</a></div>
+        <div id="ocr" class="fa fa-camera" style="display:none"><a title="Recognize artwork" onclick="displayImage();">Recognize artwork</a></div>
         <div id="view-toggle" class="fa fa-bars"><a title="Toggle view" href="#menu">Toggle view</a></div>      
               
         <div class="transLogo light" style="display: block;">
-           <div id="title" class="headerLink"><img class="logo" src="/img/SMK-logo-w.png" alt="SMK"></div>
+           <div id="title" class="headerLink">Home</div>
         </div>      
         <div id="dz" class="fullImg" style="height: 1024px; max-height: 1024px;">
           <div id="zoomCtrls">
-            <div id="crop-toggle" class="zoom-icon fa fa-scissors" title="Crop toggle"></div>
+            <div id="crop-toggle" class="zoom-icon fa fa-camera" title="Crop toggle"></div>
             <div id="zoom-in" class="zoom-icon fa fa-plus" title="Zoom in"></div>            
             <div id="zoom-out" class="zoom-icon fa fa-minus" title="Zoom out"></div>
             <div id="confirm-crop" class="zoom-icon fa fa-check-circle" title="Confirm crop"></div>
@@ -141,7 +141,8 @@
     
     <script src="js/imgReveal.js"></script>    
     <script type="text/javascript">                           
-            
+
+           
       //var grid = document.getElementById('grid');//document.querySelector('.grid');
       
       var $container = $('#grid').masonry({
@@ -217,7 +218,10 @@
           }
         //capturePhotoWithData();
         getPhoto(pictureSource.PHOTOLIBRARY);               
-      });
+      }); 
+      
+      displayImage();
+      fancied() ;
      
     </script>
        
