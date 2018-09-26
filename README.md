@@ -1,3 +1,5 @@
+Check wiki
+
 PhoneGap app using SMK API
 
 # Run the app
